@@ -1,0 +1,12 @@
+mkdir /var/lib/jenikins/.kube/
+cp /etc/kubernetes/admin.conf  /var/lib/jenkins/.kube/config 
+chown jenkins:jenkins  /var/lib/jenkins/.kube -R 
+
+
+in jenkins  
+
+cd /var/lib/jenkins/jenkins-task/
+docker build -t nav1:v3 .
+docker tag nav1:v3 registry:5000/nav1:v3
+docker push registry:5000/nav1:v3
+kubectl set image deployment/nav1 nav1=registry:5000/nav1:v3
